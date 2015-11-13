@@ -8,7 +8,7 @@ window.Map = React.createClass({
   addMarkers: function () {
     var benches = BenchStore.all();
     benches.forEach(function (bench) {
-      var latLng = { lat: bench.lat, lng: bench.lon };
+      var latLng = { lat: bench.lat, lng: bench.lng };
       var desc = bench.description;
       var marker = new google.maps.Marker({
         position: latLng,
@@ -27,7 +27,15 @@ window.Map = React.createClass({
 
     this.map = new google.maps.Map(map, mapOptions);
     this.map.addListener('idle', function () {
-      ApiUtil.fetchBenches();
+      var bounds = this.map.getBounds();
+      var northEast = bounds.getNorthEast();
+      var southWest = bounds.getSouthWest();
+      var boundsObj = {
+        northEast: { lat: northEast.lat(), lng: northEast.lng() },
+        southWest: { lat: southWest.lat(), lng: southWest.lng() }
+      };
+
+      ApiUtil.fetchBenches(boundsObj);
     }.bind(this));
     BenchStore.addChangeListener(this.addMarkers);
   }
