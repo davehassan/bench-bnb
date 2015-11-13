@@ -19,6 +19,12 @@
       this.removeListener(CHANGE_EVENT, callback);
     },
 
+    findInStore: function (benchId) {
+      for (var i = 0; i < _benches.length; i++) {
+        if (_benches[i].id === benchId) { return _benches[i]; }
+      }
+    },
+
     dispatcherId: AppDispatcher.register(function (payload) {
       switch(payload.actionType) {
         case BenchConstants.BENCHES_RECEIVED:

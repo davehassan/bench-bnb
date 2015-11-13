@@ -4,6 +4,16 @@ window.Map = React.createClass({
     this.addMarkers();
   },
 
+  _toggleMarkerAnimations: function () {
+    var activeId = HoverStore.currentHoverId();
+    this.markers.forEach(function (marker) {
+      marker.setAnimation(null);
+      if (activeId === marker.benchId) {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      }
+    });
+  },
+
   render: function () {
     return (
       <div className="map" ref="map"></div>
@@ -40,8 +50,10 @@ window.Map = React.createClass({
     var marker = new google.maps.Marker({
       position: latLng,
       map: this.map,
-      title: desc
+      title: desc,
+      animation: google.maps.Animation.DROP
     });
+    marker.benchId = bench.id;
 
     return marker;
   },
@@ -79,6 +91,7 @@ window.Map = React.createClass({
     }.bind(this));
     this.markers = [];
     BenchStore.addChangeListener(this._onChange);
+    HoverStore.addChangeListener(this._toggleMarkerAnimations);
   },
 
   formatBounds: function () {
