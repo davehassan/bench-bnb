@@ -30,6 +30,11 @@
         case BenchConstants.BENCHES_RECEIVED:
           resetBenches(payload.benches);
           BenchStore.emit(CHANGE_EVENT);
+          break;
+        case BenchConstants.SINGLE_BENCH_RECEIVED:
+          _benches.push(payload.bench);
+          BenchStore.emit(CHANGE_EVENT);
+          break;
       }
     })
   });

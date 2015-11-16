@@ -9,5 +9,17 @@ ApiUtil = {
         ApiActions.receiveAllBenches(benches);
       }
     });
+  },
+
+  createBench: function (bench) {
+    $.ajax({
+      url: '/api/benches',
+      type: 'POST',
+      dataType: 'json',
+      data: { bench: bench },
+      success: function (data) {
+        ApiActions.receiveSingleBench(data);
+      }
+    });
   }
 };
