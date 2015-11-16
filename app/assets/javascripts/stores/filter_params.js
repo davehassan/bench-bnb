@@ -1,13 +1,15 @@
 (function (root) {
-  var _filterParams = { min: 0, max: 100};
-  var resetBounds = function (bounds) {
-    _filterParams.bounds = bounds;
-  };
-  var resetMin = function (min) {
-    _filterParams.min = min;
-  };
-  var resetMax = function (max) {
-    _filterParams.max = max;
+  var _filterParams = { bounds: {}, min: 0, max: 100};
+  var resetFilter = function (filter) {
+    if (filter.bounds) {
+      _filterParams.bounds = filter.bounds;
+    }
+    if (typeof filter.min !== 'undefined') {
+      _filterParams.min = filter.min;
+    }
+    if (typeof filter.max !== 'undefined') {
+      _filterParams.max = filter.max;
+    }
   };
 
   var CHANGE_EVENT = "change_params";
@@ -27,14 +29,8 @@
 
     dispatcherId: AppDispatcher.register(function (payload) {
       switch(payload.actionType) {
-        case FilterConstants.BOUNDS_CHANGED:
-          resetBounds(payload.bounds);
-          FilterStore.emit(CHANGE_EVENT);
-          break;
-        case FilterConstants.MIN_CHANGED:
-          FilterStore.emit(CHANGE_EVENT);
-          break;
-        case FilterConstants.MAX_CHANGED:
+        case FilterConstants.FILTER_CHANGED:
+          resetFilter(payload.filter);
           FilterStore.emit(CHANGE_EVENT);
           break;
       }

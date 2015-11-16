@@ -1,20 +1,21 @@
 window.FilterParams = React.createClass({
   getInitialState: function () {
-    return { minSeats: 0, maxSeats: 10 };
+    return { min: 0, max: 10 };
   },
 
   minChange: function (event) {
-    this.setState({minSeats: event.currentTarget.valueAsNumber});
+    this.setState({min: event.currentTarget.valueAsNumber});
+    FilterActions.receiveFilter(this.state);
   },
 
   maxChange: function (event) {
-    this.setState({maxSeats: event.currentTarget.valueAsNumber});
+    this.setState({max: event.currentTarget.valueAsNumber});
+    FilterActions.receiveFilter(this.state);
   },
 
-  // componentDidMount: function () {
-  //   FilterActions.receiveMin(this.state.minSeats);
-  //   FilterActions.receiveMax
-  // },
+  componentDidMount: function () {
+    FilterActions.receiveFilter(this.state);
+  },
 
   render: function () {
     return (
@@ -22,13 +23,13 @@ window.FilterParams = React.createClass({
         <label>Min Seats:
           <input
             type="number"
-            value={this.state.minSeats}
+            value={this.state.min}
             onChange={this.minChange}/>
         </label>
         <label>Max Seats:
           <input
             type="number"
-            value={this.state.maxSeats}
+            value={this.state.max}
             onChange={this.maxChange}/>
         </label>
       </form>

@@ -26,6 +26,7 @@
     },
 
     dispatcherId: AppDispatcher.register(function (payload) {
+      AppDispatcher.waitFor([FilterStore.dispatcherId]);
       switch(payload.actionType) {
         case BenchConstants.BENCHES_RECEIVED:
           resetBenches(payload.benches);

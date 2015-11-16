@@ -8,7 +8,6 @@ window.Search = React.createClass({
   },
 
   getParams: function () {
-    // debugger;
     this.setState(FilterStore.currentParams());
     ApiUtil.fetchBenches();
   },
@@ -16,8 +15,8 @@ window.Search = React.createClass({
   render: function () {
     return (
       <div>
-        <FilterParams />
         <Map clickMapHandler={this.clickMapHandler}/>
+        <FilterParams />
         <BenchesIndex />
       </div>
     );
