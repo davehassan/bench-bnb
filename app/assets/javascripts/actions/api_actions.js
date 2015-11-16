@@ -8,7 +8,8 @@ ApiActions = {
 
   receiveSingleBench: function (bench) {
     AppDispatcher.dispatch({
-      actionType: BenchConstants.SINGLE_BENCH_RECEIVED
+      actionType: BenchConstants.SINGLE_BENCH_RECEIVED,
+      bench: bench
     });
   }
 };

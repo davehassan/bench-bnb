@@ -4,7 +4,6 @@ window.BenchForm = React.createClass({
   },
 
   componentDidMount: function () {
-    debugger;
     this.setState({
       lat: parseFloat(this.props.location.query.lat),
       lng: parseFloat(this.props.location.query.lng)
