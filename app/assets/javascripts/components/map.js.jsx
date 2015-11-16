@@ -89,8 +89,7 @@ window.Map = React.createClass({
 
     this.map = new google.maps.Map(map, mapOptions);
     this.map.addListener('idle', function () {
-      var filterParams = { bounds: this.formatBounds() };
-      FilterActions.receiveFilterParams(filterParams);
+      FilterActions.receiveBounds(this.formatBounds());
     }.bind(this));
 
     this.map.addListener('click', function (event) {

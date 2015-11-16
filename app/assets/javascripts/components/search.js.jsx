@@ -16,6 +16,7 @@ window.Search = React.createClass({
   render: function () {
     return (
       <div>
+        <FilterParams />
         <Map clickMapHandler={this.clickMapHandler}/>
         <BenchesIndex />
       </div>
