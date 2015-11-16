@@ -14,11 +14,13 @@ window.Map = React.createClass({
     });
   },
 
+
   render: function () {
     return (
       <div className="map" ref="map"></div>
     );
   },
+
 
   clearMarkers: function () {
     var benches = BenchStore.all();
@@ -28,13 +30,14 @@ window.Map = React.createClass({
       var onMap = false;
 
       benches.forEach(function (bench) {
-        if (bench.lat === lat && bench.lng === lng) {
+        if (bench.id === marker.benchId) {
           onMap = true;
         }
       });
 
       if (!onMap) {
         marker.setMap(null);
+        marker.benchId = null;
       } else {
         markers.push(marker);
       }
@@ -65,7 +68,7 @@ window.Map = React.createClass({
       var hasMarker = false;
       this.markers.forEach(function (marker) {
         var lat = marker.position.lat(), lng = marker.position.lng();
-        if (bench.lat === lat && bench.lng === lng) {
+        if (bench.id === marker.benchId) {
           hasMarker = true;
         }
       });
@@ -89,6 +92,12 @@ window.Map = React.createClass({
 
       ApiUtil.fetchBenches(this.formatBounds());
     }.bind(this));
+
+    this.map.addListener('click', function (event) {
+      var coords = {lat: event.latLng.lat(), lng: event.latLng.lng()};
+      this.props.clickMapHandler(coords);
+    }.bind(this));
+
     this.markers = [];
     BenchStore.addChangeListener(this._onChange);
     HoverStore.addChangeListener(this._toggleMarkerAnimations);
